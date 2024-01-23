@@ -1,6 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:movie/domain/entities/movie.dart';
+import 'package:movie/presentation/bloc/now_playing_movies/now_playing_movies_bloc.dart';
 import 'package:movie/presentation/pages/favorite_movie_page.dart';
 import 'package:movie/presentation/pages/tv_show_page.dart';
 
@@ -15,6 +19,15 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   int bottomNavIndex = 0;
   FocusNode focusNode = FocusNode();
   bool statusSearch = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      BlocProvider.of<NowPlayingMoviesBloc>(context, listen: false)
+          .add(FetchNowPlayingMovies());
+    });
+  }
 
   Widget navBottomNavigationRoute(int i) {
     switch (i) {
@@ -216,6 +229,24 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                               Text("Continue Watching", style: kHeading5),
                               const SizedBox(
                                 height: 20,
+                              ),
+                              BlocBuilder<NowPlayingMoviesBloc,
+                                  NowPlayingMoviesState>(
+                                builder: (context, state) {
+                                  if (state is NowPlayingMoviesLoading) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (state is NowPlayingMoviesHasData) {
+                                    return MovieList(state.result);
+                                  } else if (state is NowPlayingMoviesError) {
+                                    return Center(
+                                      child: Text(state.message),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                },
                               ),
                               // SizedBox(
                               //   height: screenHeight * .32,
@@ -473,6 +504,48 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MovieList extends StatelessWidget {
+  final List<Movie> movies;
+
+  MovieList(this.movies);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          final movie = movies[index];
+          return Container(
+            padding: const EdgeInsets.all(8),
+            child: InkWell(
+              onTap: () {
+                // Navigator.pushNamed(
+                //   context,
+                //   MovieDetailPage.ROUTE_NAME,
+                //   arguments: movie.id,
+                // );
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                child: CachedNetworkImage(
+                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  placeholder: (context, url) => Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
+            ),
+          );
+        },
+        itemCount: movies.length,
       ),
     );
   }

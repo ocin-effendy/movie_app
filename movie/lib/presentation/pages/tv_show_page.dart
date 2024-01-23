@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 class TvShowsPage extends StatefulWidget {
@@ -115,14 +114,7 @@ class _TvShowsPageState extends State<TvShowsPage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Continue Watching",
-                                  style: GoogleFonts.nunito(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                  ),
-                                ),
+                                Text("Continue Watching", style: kHeading6),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -173,14 +165,7 @@ class _TvShowsPageState extends State<TvShowsPage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Comedy",
-                                  style: GoogleFonts.nunito(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                  ),
-                                ),
+                                Text("Comedy", style: kHeading6),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -233,14 +218,7 @@ class _TvShowsPageState extends State<TvShowsPage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Popular in Poland",
-                                  style: GoogleFonts.nunito(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                  ),
-                                ),
+                                Text("Popular in Poland", style: kHeading6),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -313,84 +291,84 @@ class _TvShowsPageState extends State<TvShowsPage> {
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
-                                ListTile(
-                                  title: Text(
-                                    "Search by...",
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 18),
-                                  ),
-                                  trailing: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.close_rounded,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    "Quote",
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    "Keywords",
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    "Genres",
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    "Title",
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    "Year",
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    "Director",
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    "Actors",
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 18),
-                                  ),
-                                ),
+                                // ListTile(
+                                //   title: Text(
+                                //     "Search by...",
+                                //     style: GoogleFonts.nunito(
+                                //         fontWeight: FontWeight.w500,
+                                //         color: Colors.white,
+                                //         fontSize: 18),
+                                //   ),
+                                //   trailing: IconButton(
+                                //       onPressed: () {},
+                                //       icon: const Icon(
+                                //         Icons.close_rounded,
+                                //         color: Colors.white,
+                                //       )),
+                                // ),
+                                // ListTile(
+                                //   title: Text(
+                                //     "Quote",
+                                //     style: GoogleFonts.nunito(
+                                //         fontWeight: FontWeight.w500,
+                                //         color: Colors.white,
+                                //         fontSize: 18),
+                                //   ),
+                                // ),
+                                // ListTile(
+                                //   title: Text(
+                                //     "Keywords",
+                                //     style: GoogleFonts.nunito(
+                                //         fontWeight: FontWeight.w500,
+                                //         color: Colors.white,
+                                //         fontSize: 18),
+                                //   ),
+                                // ),
+                                // ListTile(
+                                //   title: Text(
+                                //     "Genres",
+                                //     style: GoogleFonts.nunito(
+                                //         fontWeight: FontWeight.w500,
+                                //         color: Colors.white,
+                                //         fontSize: 18),
+                                //   ),
+                                // ),
+                                // ListTile(
+                                //   title: Text(
+                                //     "Title",
+                                //     style: GoogleFonts.nunito(
+                                //         fontWeight: FontWeight.w500,
+                                //         color: Colors.white,
+                                //         fontSize: 18),
+                                //   ),
+                                // ),
+                                // ListTile(
+                                //   title: Text(
+                                //     "Year",
+                                //     style: GoogleFonts.nunito(
+                                //         fontWeight: FontWeight.w500,
+                                //         color: Colors.white,
+                                //         fontSize: 18),
+                                //   ),
+                                // ),
+                                // ListTile(
+                                //   title: Text(
+                                //     "Director",
+                                //     style: GoogleFonts.nunito(
+                                //         fontWeight: FontWeight.w500,
+                                //         color: Colors.white,
+                                //         fontSize: 18),
+                                //   ),
+                                // ),
+                                // ListTile(
+                                //   title: Text(
+                                //     "Actors",
+                                //     style: GoogleFonts.nunito(
+                                //         fontWeight: FontWeight.w500,
+                                //         color: Colors.white,
+                                //         fontSize: 18),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
