@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:movie/domain/entities/movie.dart';
 import 'package:movie/presentation/bloc/now_playing_movies/now_playing_movies_bloc.dart';
+import 'package:movie/presentation/bloc/popular_movies/popular_movies_bloc.dart';
+import 'package:movie/presentation/bloc/top_rated_movies/top_rated_movies_bloc.dart';
 import 'package:movie/presentation/pages/favorite_movie_page.dart';
 import 'package:movie/presentation/pages/tv_show_page.dart';
 
@@ -27,6 +29,16 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
       BlocProvider.of<NowPlayingMoviesBloc>(context, listen: false)
           .add(FetchNowPlayingMovies());
     });
+
+    Future.microtask(
+      () => BlocProvider.of<PopularMoviesBloc>(context, listen: false)
+          .add(FetchPopularMovies()),
+    );
+
+    Future.microtask(
+      () => BlocProvider.of<TopRatedMoviesBloc>(context, listen: false)
+          .add(FetchTopRatedMovies()),
+    );
   }
 
   Widget navBottomNavigationRoute(int i) {
@@ -226,10 +238,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Continue Watching", style: kHeading5),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              Text("Continue Watching", style: kHeading6),
                               BlocBuilder<NowPlayingMoviesBloc,
                                   NowPlayingMoviesState>(
                                 builder: (context, state) {
@@ -248,43 +257,6 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                                   }
                                 },
                               ),
-                              // SizedBox(
-                              //   height: screenHeight * .32,
-                              //   child: movieC.isLoading.value
-                              //       ? Center(
-                              //           child: CircularProgressIndicator(),
-                              //         )
-                              //       : ListView.builder(
-                              //           physics:
-                              //               const BouncingScrollPhysics(),
-                              //           scrollDirection: Axis.horizontal,
-                              //           itemCount: movieC.movieModel
-                              //                   ?.results.length ??
-                              //               0,
-                              //           itemBuilder: (context, index) {
-                              //             return MovieCard(
-                              //               title: movieC
-                              //                       .movieModel
-                              //                       ?.results[index]
-                              //                       .title ??
-                              //                   "no title",
-                              //               rating: movieC
-                              //                       .movieModel
-                              //                       ?.results[index]
-                              //                       .voteAverage
-                              //                       .toString() ??
-                              //                   "0",
-                              //               linkImage: movieC
-                              //                       .movieModel
-                              //                       ?.results[index]
-                              //                       .posterPath ??
-                              //                   "",
-                              //               id: movieC.movieModel
-                              //                       ?.results[index].id ??
-                              //                   0,
-                              //             );
-                              //           }),
-                              // ),
                             ],
                           ),
                           const SizedBox(
@@ -293,47 +265,25 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Top Movie", style: kHeading5),
-                              const SizedBox(
-                                height: 20,
+                              Text("Top Movie", style: kHeading6),
+                              BlocBuilder<TopRatedMoviesBloc,
+                                  TopRatedMoviesState>(
+                                builder: (context, state) {
+                                  if (state is TopRatedMoviesLoading) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (state is TopRatedMoviesHasData) {
+                                    return MovieList(state.result);
+                                  } else if (state is TopRatedMoviesError) {
+                                    return Center(
+                                      child: Text(state.message),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                },
                               ),
-                              // SizedBox(
-                              //   height: screenHeight * .32,
-                              //   child: movieC.isLoadingTop.value
-                              //       ? Center(
-                              //           child: CircularProgressIndicator(),
-                              //         )
-                              //       : ListView.builder(
-                              //           physics:
-                              //               const BouncingScrollPhysics(),
-                              //           scrollDirection: Axis.horizontal,
-                              //           itemCount: movieC.movieTopModel
-                              //                   ?.results.length ??
-                              //               0,
-                              //           itemBuilder: (context, index) {
-                              //             return MovieCard(
-                              //               title: movieC
-                              //                       .movieTopModel
-                              //                       ?.results[index]
-                              //                       .title ??
-                              //                   "no title",
-                              //               rating: movieC
-                              //                       .movieTopModel
-                              //                       ?.results[index]
-                              //                       .voteAverage
-                              //                       .toString() ??
-                              //                   "0",
-                              //               linkImage: movieC
-                              //                       .movieTopModel
-                              //                       ?.results[index]
-                              //                       .posterPath ??
-                              //                   "",
-                              //               id: movieC.movieTopModel
-                              //                       ?.results[index].id ??
-                              //                   0,
-                              //             );
-                              //           }),
-                              // ),
                             ],
                           ),
                           const SizedBox(
@@ -342,47 +292,25 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Popular on Movie it", style: kHeading5),
-                              const SizedBox(
-                                height: 20,
+                              Text("Popular on Movie it", style: kHeading6),
+                              BlocBuilder<PopularMoviesBloc,
+                                  PopularMoviesState>(
+                                builder: (context, state) {
+                                  if (state is PopularMoviesLoading) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (state is PopularMoviesHasData) {
+                                    return MovieList(state.result);
+                                  } else if (state is PopularMoviesError) {
+                                    return Center(
+                                      child: Text(state.message),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                },
                               ),
-                              // SizedBox(
-                              //   height: screenHeight * .32,
-                              //   child: movieC.isLoadingPopular.value
-                              //       ? Center(
-                              //           child: CircularProgressIndicator(),
-                              //         )
-                              //       : ListView.builder(
-                              //           physics:
-                              //               const BouncingScrollPhysics(),
-                              //           scrollDirection: Axis.horizontal,
-                              //           itemCount: movieC.moviePopularModel
-                              //                   ?.results.length ??
-                              //               0,
-                              //           itemBuilder: (context, index) {
-                              //             return MovieCard(
-                              //               title: movieC
-                              //                       .moviePopularModel
-                              //                       ?.results[index]
-                              //                       .title ??
-                              //                   "no title",
-                              //               rating: movieC
-                              //                       .moviePopularModel
-                              //                       ?.results[index]
-                              //                       .voteAverage
-                              //                       .toString() ??
-                              //                   "0",
-                              //               linkImage: movieC
-                              //                       .moviePopularModel
-                              //                       ?.results[index]
-                              //                       .posterPath ??
-                              //                   "",
-                              //               id: movieC.moviePopularModel
-                              //                       ?.results[index].id ??
-                              //                   0,
-                              //             );
-                              //           }),
-                              // ),
                             ],
                           ),
                           const SizedBox(
